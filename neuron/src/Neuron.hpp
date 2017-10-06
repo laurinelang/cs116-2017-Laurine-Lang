@@ -7,7 +7,7 @@ class Neuron
 {
 	
 	public:
-	
+		//Constantes specifiques aux neurones
 		const Time TAO_REF = 2.0;
 		const Time TAO = 20.0;
 		const double C = 1.0;
