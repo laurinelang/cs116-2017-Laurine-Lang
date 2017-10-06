@@ -2,19 +2,13 @@
 #define NEURON_HPP
 
 #include "Const.hpp"
+#include <fstream>
 
 class Neuron
 {
 	
 	public:
-		//Constantes specifiques aux neurones
-		const Time TAO_REF = 2.0;
-		const Time TAO = 20.0;
-		const double C = 1.0;
-		const double R = TAO / C;
-		const double V_TH = 20.0;
-		
-		//Constructeurs
+		//Constructor
 		Neuron();
 		//Getters
 		double getMembranePotential() const;
@@ -23,6 +17,9 @@ class Neuron
 		
 		void addSpike(Time t);
 		void update(Time t, double input_current);
+		void saveSpikes(std::ofstream& fichier);
+		void savePotential(std::ofstream& fichier);
+		//savePotential
 		
 	private:
 		bool refractory(Time t) const;
