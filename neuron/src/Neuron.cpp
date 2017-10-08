@@ -40,7 +40,6 @@ bool Neuron::refractory(Time t) const
 	 }
 }
 
-
 //update the mebrane potential of the neuron depending on if it is refractory or not
 void Neuron::update (Time t, double input_current)
 {
@@ -51,8 +50,10 @@ void Neuron::update (Time t, double input_current)
 	} else { 
  		if(m_membranePotential >= V_TH){
 			addSpike(t); //add the new spike in the table of spikes
+			m_membranePotential =0.0;
+		} else {
+			m_membranePotential=(potential+input_current*R*(1-exp(-H/TAO)));
 		}
-		m_membranePotential=potential+input_current*R*(1-exp(-H/TAO));
 	}
 }
 

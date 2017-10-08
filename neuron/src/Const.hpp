@@ -16,7 +16,7 @@ const Time TAO_REF = 2.0; //time constant in which the neuron is refractory
 const Time TAO = 20.0; //time constant (tao=R*C)
 const double C = 1.0; //membrane capacity
 const double R = TAO / C; //membrane resistance
-const double V_TH = 20.0; //potential threshold
+const double V_TH = 20; //potential threshold
 
 #endif
 
