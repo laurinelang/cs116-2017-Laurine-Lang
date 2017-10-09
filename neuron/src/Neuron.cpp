@@ -5,7 +5,7 @@
 using namespace std;
 
 //Constructor
-Neuron::Neuron(): m_membranePotential(10), m_times(){}
+Neuron::Neuron(): m_membranePotential(0.0), m_times(){}
 
 //Getters
 double Neuron::getMembranePotential() const
@@ -41,18 +41,21 @@ bool Neuron::refractory(Time t) const
 }
 
 //update the mebrane potential of the neuron depending on if it is refractory or not
-void Neuron::update (Time t, double input_current)
+bool Neuron::update (Time t, double input_current)
 {
-	double potential(exp(-H/TAO)*m_membranePotential);
+	bool spike (false);
 	if (refractory(t)) //neuron refactory
 	{
 		m_membranePotential=0.0;
+		return spike;
 	} else { 
  		if(m_membranePotential >= V_TH){
 			addSpike(t); //add the new spike in the table of spikes
 			m_membranePotential =0.0;
+			return !spike;
 		} else {
-			m_membranePotential=(potential+input_current*R*(1-exp(-H/TAO)));
+			m_membranePotential=(exp(-H/TAO)*m_membranePotential+input_current*R*(1-exp(-H/TAO)));
+			return spike;
 		}
 	}
 }

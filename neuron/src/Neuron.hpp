@@ -16,7 +16,7 @@ class Neuron
 		timesList getSpikesTimes() const;
 		
 		void addSpike(Time t);
-		void update(Time t, double input_current);
+		bool update(Time t, double input_current);
 		void saveSpikes(std::ofstream& fichier);
 		void savePotential(std::ofstream& fichier);
 		//savePotential
@@ -26,6 +26,7 @@ class Neuron
 		
 		double m_membranePotential; //the membrane potential
 		timesList m_times; //times when spikes occured to have the number of spikes just look at the size of the table
+		Time m_clock;
 };
  
 #endif

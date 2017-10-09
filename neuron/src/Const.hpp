@@ -6,8 +6,8 @@
 typedef double Time;
 typedef std::vector<Time> timesList;
 
-const  double T_START = 0.0;
-const double T_STOP =100.0;
+const  double T_START = 100.0;
+const double T_STOP =400.0;
 const Time H = 0.1; //dt
 const double N = 1.0; //change it to run the simulation faster
 

@@ -35,7 +35,10 @@ int main()
 			input_current = chosen_input_current;
 		}
 		neuron.savePotential(fichier); //save the membrane potential into a file
-		neuron.update(simtime, input_current);  //update the membrane potential
+		if (neuron.update(simtime, input_current))  //update the membrane potential
+		{
+			cout << "Spike time: " <<simtime  << " ms" << endl;
+		}
 		simtime += N*H;
 	}
 	
