@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "Neuron.hpp"
+#include "Const.hpp"
 
 using namespace std;
 
@@ -10,19 +11,22 @@ int main()
 	ofstream fichier("spikes.txt");
 	
 	//Allow the user to enter data (current, time interval)
-	Time simtime (T_START);
+	step simtime(0);
 	double chosen_input_current;
-	Time a(0.0);
-	Time b(0.0);
+	step a(0);
+	step b(0);
 	cout << "Choose an extenal current:" << endl;
 	cin >> chosen_input_current;
-	while (a >= b or a < 0.0 or b < 0.0)
+	while (a >= b or a < 0 or b < 0)
 	{
+		double s(0.0), e(0.0);
 		cout << "Choose an time interval (conditions: a < b, a and b must be positive values): "; //time must be positive
-		cin >> a;
-		cin >> b;
+		cin >> s;
+		cin >> e;
+		cout << "[" << s << "," << e << "]" << endl;
+		a = s/H;
+		b = e/H;
 	}
-	cout << "[" << a << "," << b << "]" << endl;
 	 
 	fichier << "Membrane Potential: " << endl;
 	
@@ -30,16 +34,17 @@ int main()
 	while(simtime < T_STOP)
 	{
 		double input_current(0.0);
+		
 		if(simtime >=a && simtime < b)
 		{
 			input_current = chosen_input_current;
 		}
 		neuron.savePotential(fichier); //save the membrane potential into a file
-		if (neuron.update(simtime, input_current))  //update the membrane potential
+		if (neuron.update(1, input_current))  //update the membrane potential
 		{
-			cout << "Spike time: " <<simtime  << " ms" << endl;
+			cout << "Spike time: " << simtime*H  << " ms" << endl;
 		}
-		simtime += N*H;
+		simtime ++;
 	}
 	
 	neuron.saveSpikes(fichier); //save the time of the spikes in a file

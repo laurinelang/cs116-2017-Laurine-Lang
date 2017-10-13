@@ -5,7 +5,7 @@
 using namespace std;
 
 //Constructor
-Neuron::Neuron(): m_membranePotential(0.0), m_times(){}
+Neuron::Neuron(): m_membranePotential(0.0), m_times(), m_clock(0) {}
 
 //Getters
 double Neuron::getMembranePotential() const
@@ -15,49 +15,54 @@ double Neuron::getMembranePotential() const
 
 double Neuron::getNbSpikes() const
 {
-    return m_times.size() - 1;
+    return m_times.size();
 }
 
-timesList Neuron::getSpikesTimes() const
+std::vector<step> Neuron::getSpikesTimes() const
 {
 	return m_times;
 }
 
 //add a spike to the table of times
-void Neuron::addSpike(Time t) 
+void Neuron::addSpike(step t) 
 {
 	m_times.push_back(t);
 }
 
 //Method to see if the neuron il refractory or not (true/flase)
-bool Neuron::refractory(Time t) const
+bool Neuron::refractory(step t) const
 {
 	 if(m_times.size() == 0.0) //if there wasn't any spike (begining of the simulation) the neuron can't be refractory
 	 {
 		 return false;
 	 }else {
-		 return t - m_times.back() <= TAO_REF;
+		 return t - m_times.back() < TAO_REF;
 	 }
 }
 
 //update the mebrane potential of the neuron depending on if it is refractory or not
-bool Neuron::update (Time t, double input_current)
+bool Neuron::update (step t, double input_current)
 {
+	if(t == 0) return false;
+	const step t_stop = m_clock + t;
 	bool spike (false);
-	if (refractory(t)) //neuron refactory
-	{
-		m_membranePotential=0.0;
-		return spike;
-	} else { 
- 		if(m_membranePotential >= V_TH){
-			addSpike(t); //add the new spike in the table of spikes
-			m_membranePotential =0.0;
-			return !spike;
-		} else {
-			m_membranePotential=(exp(-H/TAO)*m_membranePotential+input_current*R*(1-exp(-H/TAO)));
-			return spike;
+	
+	while(m_clock < t_stop){
+		if (refractory(m_clock)) //neuron refactory 
+		{
+			m_membranePotential=0.0;
+		} else { 
+			if(m_membranePotential >= V_TH){
+				addSpike(m_clock); //add the new spike in the table of spikes 
+				m_membranePotential =0.0;
+				spike = true;
+			} else {
+				m_membranePotential=(exp(-H/TAO)*m_membranePotential+input_current*R*(1-exp(-H/TAO)));
+			}
 		}
+		m_clock++;
 	}
+	return spike;
 }
 
 //save the time of the spike into a file
@@ -71,7 +76,7 @@ void Neuron::saveSpikes(std::ofstream& fichier)
 		fichier << "Spike times: " << endl;
 		for(auto spike : getSpikesTimes())
 		{
-			fichier << spike << endl;
+			fichier << spike*H << endl;
 		}
 	}
 }
@@ -87,3 +92,4 @@ void Neuron::savePotential(std::ofstream& fichier)
 		fichier << m_membranePotential << endl;
 	}
 }
+
