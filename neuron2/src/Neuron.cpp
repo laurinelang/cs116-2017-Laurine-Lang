@@ -1,11 +1,12 @@
 #include "Neuron.hpp"
 #include <iostream>
 #include <cmath>
+#include <cassert>
 
 using namespace std;
 
 //Constructor
-Neuron::Neuron(): m_membranePotential(0.0), m_times(), m_clock(0) {}
+Neuron::Neuron(): m_membranePotential(0.0), m_times(), m_clock(0), m_j({0}){}
 
 //Getters
 double Neuron::getMembranePotential() const
@@ -55,9 +56,14 @@ bool Neuron::update (step t, double input_current)
 			if(m_membranePotential >= V_TH){
 				addSpike(m_clock); //add the new spike in the table of spikes 
 				m_membranePotential =0.0;
+				for(auto neuron : m_connectedNeurons)
+				{
+					neuron->addJ(0);
+				}
 				spike = true;
 			} else {
-				m_membranePotential=(exp(-H/TAO)*m_membranePotential+input_current*R*(1-exp(-H/TAO)));
+				m_membranePotential=(exp(-H/TAO)*m_membranePotential+input_current*R*(1-exp(-H/TAO)) + m_j[m_clock%m_j.size()]*J);
+				m_j[m_clock%m_j.size()] = 0;
 			}
 		}
 		m_clock++;
@@ -91,5 +97,17 @@ void Neuron::savePotential(std::ofstream& fichier)
 	} else {
 		fichier << m_membranePotential << endl;
 	}
+}
+
+
+void Neuron::addConnectionTo(Neuron* other)
+{
+	m_connectedNeurons.push_back(other);
+}
+
+void Neuron::addJ(step delay)
+{
+	assert(delay < m_j.size());
+	m_j[(m_clock + delay)%m_j.size()] ++;
 }
 

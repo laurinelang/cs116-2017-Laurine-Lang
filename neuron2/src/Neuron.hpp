@@ -3,9 +3,10 @@
 
 #include <vector>
 #include <fstream>
+#include <array>
 #include "Const.hpp"
 
-typedef long step;
+typedef unsigned int step;
 
 class Neuron
 {
@@ -31,7 +32,8 @@ class Neuron
 		bool update(step t, double input_current);
 		void saveSpikes(std::ofstream& fichier);
 		void savePotential(std::ofstream& fichier);
-		//savePotential
+		void addConnectionTo(Neuron* other);
+		void addJ(step delay);
 		
 	private:
 		bool refractory(step t) const;
@@ -41,6 +43,8 @@ class Neuron
 							*of spikes just look at the size of the table
 							*/
 		step m_clock;
+		std::vector<Neuron*> m_connectedNeurons;
+		std::array<int, 5> m_j;
 };
  
 #endif

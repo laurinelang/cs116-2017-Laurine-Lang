@@ -7,7 +7,9 @@ using namespace std;
 
 int main()
 {
-	Neuron neuron;
+	vector<Neuron> neurons(2);
+	neurons[1].addConnectionTo(&neurons[0]);
+	
 	ofstream fichier("spikes.txt");
 	
 	//Allow the user to enter data (current, time interval)
@@ -39,16 +41,22 @@ int main()
 		{
 			input_current = chosen_input_current;
 		}
-		neuron.savePotential(fichier); //save the membrane potential into a file
-		if (neuron.update(1, input_current))  //update the membrane potential
-		{
-			cout << "Spike time: " << simtime*H  << " ms" << endl;
+		for(size_t i(0); i < neurons.size(); i++)
+		{	
+			fichier << "Neuron " << i << " : ";
+			neurons[i].savePotential(fichier); //save the membrane potential into a file
+			if (neurons[i].update(1, input_current*i))  //update the membrane potential
+			{
+				cout << "Neuron " << i << " : Spike time: " << simtime*H  << " ms" << endl;
+			}
 		}
 		simtime ++;
 	}
 	
-	neuron.saveSpikes(fichier); //save the time of the spikes in a file
+	for(auto neuron: neurons)
+		neuron.saveSpikes(fichier); //save the time of the spikes in a file
 	fichier.close();
 	
 	return 0;
 }
+
