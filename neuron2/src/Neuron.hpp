@@ -13,13 +13,15 @@ class Neuron
 	
 	public:
 		//Specific constants for the neuron
-		const step TAO_REF = 2.0/H; //time constant in which the neuron is refractory
-		const double TAO = 20.0; //time constant (tao=R*C)
-		const double C = 1.0; //membrane capacity
-		const double R = TAO / C; //membrane resistance
-		const double V_TH = 20; //potential threshold
+		static constexpr step TAO_REF = 2.0/H; //time constant in which the neuron is refractory
+		static constexpr double TAO = 20.0; //time constant (tao=R*C)
+		static constexpr double C = 1.0; //membrane capacity
+		static constexpr double R = TAO / C; //membrane resistance
+		static constexpr double V_TH = 20; //potential threshold
 
-		const double J = 0.1; //mv
+		static constexpr double J = 0.1; //mv
+		static constexpr double D = 0.2; //mv
+		static constexpr size_t buffer_size = D/H + 1;
 		
 		//Constructor
 		Neuron();

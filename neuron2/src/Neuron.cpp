@@ -6,7 +6,7 @@
 using namespace std;
 
 //Constructor
-Neuron::Neuron(): m_membranePotential(0.0), m_times(), m_clock(0),m_j{0} , m_current(0.0){}
+Neuron::Neuron(): m_membranePotential(0.0), m_times(), m_clock(0), m_j{0} , m_current(0.0){}
 
 //Getters
 double Neuron::getMembranePotential() const
@@ -62,7 +62,8 @@ bool Neuron::update (step t, double input_current)
 		if (refractory(m_clock)) //neuron refactory 
 		{
 			m_membranePotential=0.0;
-		} else { 
+		} else {
+			
 			if(m_membranePotential >= V_TH){
 				addSpike(m_clock); //add the new spike in the table of spikes 
 				m_membranePotential =0.0;
@@ -71,7 +72,8 @@ bool Neuron::update (step t, double input_current)
 					neuron->addJ(D/H);
 				}
 				spike = true;
-			} else {
+			}
+			else{	
 				m_membranePotential=(exp(-H/TAO)*m_membranePotential+input_current*R*(1-exp(-H/TAO)) + m_j[m_clock%m_j.size()]*J);
 				m_j[m_clock%m_j.size()] = 0;
 			}
