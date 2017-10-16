@@ -27,6 +27,8 @@ class Neuron
 		double getMembranePotential() const;
 		double getNbSpikes() const;
 		std::vector<step> getSpikesTimes() const;
+		double getCurrent() const;
+		double setCurrent(double ext_current);
 		
 		void addSpike(step t);
 		bool update(step t, double input_current);
@@ -44,7 +46,8 @@ class Neuron
 							*/
 		step m_clock;
 		std::vector<Neuron*> m_connectedNeurons;
-		std::array<int, 5> m_j;
+		std::array<int, buffer_size> m_j;
+		double m_current;
 };
  
 #endif

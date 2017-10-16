@@ -6,7 +6,7 @@
 using namespace std;
 
 //Constructor
-Neuron::Neuron(): m_membranePotential(0.0), m_times(), m_clock(0), m_j({0}){}
+Neuron::Neuron(): m_membranePotential(0.0), m_times(), m_clock(0),m_j{0} , m_current(0.0){}
 
 //Getters
 double Neuron::getMembranePotential() const
@@ -22,6 +22,16 @@ double Neuron::getNbSpikes() const
 std::vector<step> Neuron::getSpikesTimes() const
 {
 	return m_times;
+}
+
+double Neuron::getCurrent() const
+{
+	return m_current;
+}
+
+double Neuron::setCurrent(double ext_current)
+{
+	return m_current=ext_current;
 }
 
 //add a spike to the table of times
@@ -58,7 +68,7 @@ bool Neuron::update (step t, double input_current)
 				m_membranePotential =0.0;
 				for(auto neuron : m_connectedNeurons)
 				{
-					neuron->addJ(0);
+					neuron->addJ(D/H);
 				}
 				spike = true;
 			} else {
@@ -108,6 +118,6 @@ void Neuron::addConnectionTo(Neuron* other)
 void Neuron::addJ(step delay)
 {
 	assert(delay < m_j.size());
-	m_j[(m_clock + delay)%m_j.size()] ++;
+	m_j[(m_clock + delay)%m_j.size()]++;
 }
 

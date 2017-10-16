@@ -7,8 +7,9 @@ using namespace std;
 
 int main()
 {
-	vector<Neuron> neurons(2);
+	vector<Neuron> neurons(3);
 	neurons[1].addConnectionTo(&neurons[0]);
+	neurons[2].addConnectionTo(&neurons[0]);
 	
 	ofstream fichier("spikes.txt");
 	
@@ -45,7 +46,11 @@ int main()
 		{	
 			fichier << "Neuron " << i << " : ";
 			neurons[i].savePotential(fichier); //save the membrane potential into a file
-			if (neurons[i].update(1, input_current*i))  //update the membrane potential
+			if(i!= 0) 
+			{ 
+				neurons[i].setCurrent(input_current);
+			}
+			if (neurons[i].update(1, neurons[i].getCurrent()))  //update the membrane potential
 			{
 				cout << "Neuron " << i << " : Spike time: " << simtime*H  << " ms" << endl;
 			}
