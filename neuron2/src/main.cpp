@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "Neuron.hpp"
-#include "Const.hpp"
+#include "Utility.hpp"
 
 using namespace std;
 
@@ -14,7 +14,7 @@ int main()
 	ofstream fichier("spikes.txt");
 	
 	//Allow the user to enter data (current, time interval)
-	step simtime(0);
+	step simtime(T_START);
 	double chosen_input_current;
 	step a(0);
 	step b(0);
@@ -46,11 +46,7 @@ int main()
 		{	
 			fichier << "Neuron " << i << " : ";
 			neurons[i].savePotential(fichier); //save the membrane potential into a file
-			if(i!= 0) 
-			{ 
-				neurons[i].setCurrent(input_current);
-			}
-			if (neurons[i].update(1, neurons[i].getCurrent()))  //update the membrane potential
+			if (neurons[i].update(1, i == 0 ? 0 : input_current))  //update the membrane potential, depending on if the neuron get the current or not
 			{
 				cout << "Neuron " << i << " : Spike time: " << simtime*H  << " ms" << endl;
 			}

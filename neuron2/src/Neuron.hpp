@@ -4,9 +4,8 @@
 #include <vector>
 #include <fstream>
 #include <array>
-#include "Const.hpp"
+#include "Utility.hpp"
 
-typedef unsigned int step;
 
 class Neuron
 {
@@ -20,7 +19,7 @@ class Neuron
 		static constexpr double V_TH = 20; //potential threshold
 
 		static constexpr double J = 0.1; //mv
-		static constexpr double D = 0.2; //mv
+		static constexpr double D = 1.5; //mv
 		static constexpr size_t buffer_size = D/H + 1;
 		
 		//Constructor
@@ -29,8 +28,6 @@ class Neuron
 		double getMembranePotential() const;
 		double getNbSpikes() const;
 		std::vector<step> getSpikesTimes() const;
-		double getCurrent() const;
-		double setCurrent(double ext_current);
 		
 		void addSpike(step t);
 		bool update(step t, double input_current);
@@ -49,7 +46,6 @@ class Neuron
 		step m_clock;
 		std::vector<Neuron*> m_connectedNeurons;
 		std::array<int, buffer_size> m_j;
-		double m_current;
 };
  
 #endif
