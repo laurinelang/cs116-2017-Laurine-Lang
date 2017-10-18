@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Neuron.hpp"
 #include <cmath>
-#include "googletest/include/gtest/gtest.h"
+#include "gtest/gtest.h"
 
 TEST (neuronTest, Test_mPotential)
 {
