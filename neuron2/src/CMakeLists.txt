@@ -2,6 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 project (Neuron)
 
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
+set(CMAKE_CXX_FLAGS "-W -Wall -pedantic -std=c++11")
 
 enable_testing()
 add_subdirectory(gtest)

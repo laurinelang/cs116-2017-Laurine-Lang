@@ -20,17 +20,18 @@ int main()
 	step b(0);
 	cout << "Choose an extenal current:" << endl;
 	cin >> chosen_input_current;
-	while (a >= b or a < 0 or b < 0)
+	
+	double s(0.0), e(0.0);
+	while (s >= e or s < 0.0 or e < 0.0)
 	{
-		double s(0.0), e(0.0);
 		cout << "Choose an time interval (conditions: a < b, a and b must be positive values): "; //time must be positive
 		cin >> s;
 		cin >> e;
 		cout << "[" << s << "," << e << "]" << endl;
-		a = s/H;
-		b = e/H;
 	}
 	 
+	a = s/H;
+	b = e/H;
 	fichier << "Membrane Potential: " << endl;
 	
 	//run simulation
