@@ -19,14 +19,14 @@ class Neuron
 		static constexpr double V_TH = 20; //potential threshold
 
 		static constexpr double J = 0.1; //mv
-		static constexpr double D = 1.5; //mv
-		static constexpr size_t buffer_size = D/H + 1;
+		static constexpr step D = 1.5/H; //mv
+		static constexpr size_t buffer_size = D + 1;
 		
 		//Constructor
-		Neuron();
+		Neuron(bool isExcitatory);
 		//Getters
 		double getMembranePotential() const;
-		double getNbSpikes() const;
+		unsigned int getNbSpikes() const;
 		std::vector<step> getSpikesTimes() const;
 		
 		void addSpike(step t);
@@ -34,7 +34,7 @@ class Neuron
 		void saveSpikes(std::ofstream& fichier);
 		void savePotential(std::ofstream& fichier);
 		void addConnectionTo(Neuron* other);
-		void addJ(step delay);
+		void addJ(int coeff);
 		
 	private:
 		bool refractory(step t) const;
@@ -44,8 +44,8 @@ class Neuron
 							*of spikes just look at the size of the table
 							*/
 		step m_clock;
-		std::vector<Neuron*> m_connectedNeurons;
 		std::array<int, buffer_size> m_j;
+		bool m_isExcitatory;
 };
  
 #endif

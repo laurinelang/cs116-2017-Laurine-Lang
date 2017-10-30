@@ -6,7 +6,10 @@
 using namespace std;
 
 //Constructor
-Neuron::Neuron(): m_membranePotential(0.0), m_times(), m_clock(T_START), m_j{0}{}
+Neuron::Neuron(bool isExcitatory): m_membranePotential(0.0), 
+									m_times(), 
+									m_clock(T_START), m_j{0}, 
+									m_isExcitatory(isExcitatory){}
 
 //Getters
 double Neuron::getMembranePotential() const
@@ -14,7 +17,7 @@ double Neuron::getMembranePotential() const
     return m_membranePotential;
 }
 
-double Neuron::getNbSpikes() const
+unsigned int Neuron::getNbSpikes() const
 {
     return m_times.size();
 }
@@ -58,14 +61,10 @@ bool Neuron::update (step t, double input_current)
 			{ 
 				addSpike(m_clock); //add the new spike in the table of spikes 
 				m_membranePotential =0.0;
-				for(auto neuron : m_connectedNeurons)
-				{
-					neuron->addJ(D/H); //Add the value of J to the neurons connected to the one who spike (whith a delay)
-				}
 				spike = true;
 			}
 			else{	
-				m_membranePotential=(exp(-H/TAO)*m_membranePotential+input_current*R*(1-exp(-H/TAO)) + m_j[m_clock%m_j.size()]*J);
+				m_membranePotential=(exp(-H/TAO)*m_membranePotential+input_current*R*(1-exp(-H/TAO)) + m_j[m_clock%m_j.size()]*J );
 				m_j[m_clock%m_j.size()] = 0; //"Clean" the step in which we are now 
 			}
 		}
@@ -102,15 +101,11 @@ void Neuron::savePotential(std::ofstream& fichier)
 	}
 }
 
-
-void Neuron::addConnectionTo(Neuron* other) //Add connections to the neuron 
+void Neuron::addJ(int coeff) //Add J to the buffer (with the right delay) 
 {
-	m_connectedNeurons.push_back(other);
+	//assert((m_clock + delay )%m_j.size() < m_j.size()); 
+	assert (D < m_j.size());
+	m_j[(m_clock + D)%m_j.size()]+=coeff;
 }
 
-void Neuron::addJ(step delay) //Add J the the buffer (with the right delay) 
-{
-	assert(delay < m_j.size());
-	m_j[(m_clock + delay)%m_j.size()]++;
-}
 

@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/Neuron.cpp
+Neuron.hpp
+/home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/Neuron.hpp
+iostream
+-
+cmath
+-
+cassert
+-
+
+/home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/Neuron.hpp
+vector
+-
+fstream
+-
+array
+-
+Utility.hpp
+/home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/Utility.hpp
+
+/home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/Utility.hpp
+
+/home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/main.cpp
+iostream
+-
+fstream
+-
+Neuron.hpp
+/home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/Neuron.hpp
+Utility.hpp
+/home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/Utility.hpp
+

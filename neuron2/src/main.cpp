@@ -2,61 +2,28 @@
 #include <fstream>
 #include "Neuron.hpp"
 #include "Utility.hpp"
+#include "Network.hpp"
 
 using namespace std;
 
 int main()
-{
-	vector<Neuron> neurons(3);
-	neurons[1].addConnectionTo(&neurons[0]);
-	neurons[2].addConnectionTo(&neurons[0]);
-	
-	ofstream fichier("spikes.txt");
+{	
 	
 	//Allow the user to enter data (current, time interval)
 	step simtime(T_START);
-	double chosen_input_current;
-	step a(0);
-	step b(0);
-	cout << "Choose an extenal current:" << endl;
-	cin >> chosen_input_current;
-	
-	double s(0.0), e(0.0);
-	while (s >= e or s < 0.0 or e < 0.0)
-	{
-		cout << "Choose an time interval (conditions: a < b, a and b must be positive values): "; //time must be positive
-		cin >> s;
-		cin >> e;
-		cout << "[" << s << "," << e << "]" << endl;
-	}
-	 
-	a = s/H;
-	b = e/H;
-	fichier << "Membrane Potential: " << endl;
-	
+	Network network;
+
 	//run simulation
 	while(simtime < T_STOP)
 	{
-		double input_current(0.0);
-		
-		if(simtime >=a && simtime < b)
-		{
-			input_current = chosen_input_current;
-		}
-		for(size_t i(0); i < neurons.size(); i++)
-		{	
-			fichier << "Neuron " << i << " : ";
-			neurons[i].savePotential(fichier); //save the membrane potential into a file
-			if (neurons[i].update(1, i == 0 ? 0 : input_current))  //update the membrane potential, depending on if the neuron get the current or not
-			{
-				cout << "Neuron " << i << " : Spike time: " << simtime*H  << " ms" << endl;
-			}
-		}
+		network.update();
 		simtime ++;
 	}
 	
-	for(auto neuron: neurons)
-		neuron.saveSpikes(fichier); //save the time of the spikes in a file
+	ofstream fichier("spikes.txt");
+	
+	network.printSpikes(fichier);
+	
 	fichier.close();
 	
 	return 0;
