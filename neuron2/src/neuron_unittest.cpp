@@ -15,7 +15,7 @@
 	
 	neuron2.update(1, 0.0);
 	EXPECT_NEAR(0, neuron2.getMembranePotential(), 10e-5);
-}
+}*/
 
 /*TEST (neuronTest, Test_spikesTimes)
 {

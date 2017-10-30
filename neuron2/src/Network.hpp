@@ -20,12 +20,14 @@ class Network
 		void update();
 		void setup();
 		void printSpikes(std::ofstream& fichier) const;
+		
 	private:
-		std::vector<Neuron*> m_neurons;		
-		std::vector<std::vector<int>> m_connectedNeurons;
+		std::vector<Neuron*> m_neurons;	
+		std::vector<std::vector<size_t>> m_connectedNeurons;
 		//std::random_device rd;
-		std::mt19937 m_gen;
-		std::poisson_distribution<> m_poiss;
+		//std::mt19937 m_gen;
+		//std::poisson_distribution<> m_poiss;
+		//std::vector<std::vector<int>> targets;
 };
  
 #endif

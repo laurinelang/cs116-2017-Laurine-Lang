@@ -1,20 +1,17 @@
 #include "Neuron.hpp"
 #include <iostream>
-#include <cmath>
 #include <cassert>
 
 using namespace std;
 
-//Constructor
 Neuron::Neuron(bool isExcitatory): m_membranePotential(0.0), 
 									m_times(), 
 									m_clock(T_START), m_j{0}, 
 									m_isExcitatory(isExcitatory){}
 
-//Getters
-double Neuron::getMembranePotential() const
+double Neuron::getMembranePotential() const 
 {
-    return m_membranePotential;
+    return m_membranePotential; 
 }
 
 unsigned int Neuron::getNbSpikes() const
@@ -27,7 +24,6 @@ std::vector<step> Neuron::getSpikesTimes() const
 	return m_times;
 }
 
-//add a spike to the table of times
 void Neuron::addSpike(step t) 
 {
 	m_times.push_back(t);
@@ -45,7 +41,7 @@ bool Neuron::refractory(step t) const
 }
 
 //update the mebrane potential of the neuron depending on if it is refractory or not
-bool Neuron::update (step t, double input_current)
+bool Neuron::update (step t, double input_current, int poisson)
 {
 	if(t == 0) return false;
 	const step t_stop = m_clock + t;
@@ -64,7 +60,7 @@ bool Neuron::update (step t, double input_current)
 				spike = true;
 			}
 			else{	
-				m_membranePotential=(exp(-H/TAO)*m_membranePotential+input_current*R*(1-exp(-H/TAO)) + m_j[m_clock%m_j.size()]*J );
+				m_membranePotential=(C1*m_membranePotential+input_current*C2 + (m_j[m_clock%m_j.size()] + poisson)*J);
 				m_j[m_clock%m_j.size()] = 0; //"Clean" the step in which we are now 
 			}
 		}
@@ -101,7 +97,7 @@ void Neuron::savePotential(std::ofstream& fichier)
 	}
 }
 
-void Neuron::addJ(int coeff) //Add J to the buffer (with the right delay) 
+void Neuron::addJ(int coeff)  
 {
 	//assert((m_clock + delay )%m_j.size() < m_j.size()); 
 	assert (D < m_j.size());
@@ -109,3 +105,7 @@ void Neuron::addJ(int coeff) //Add J to the buffer (with the right delay)
 }
 
 
+bool Neuron::isExcitatory() const
+{
+	return m_isExcitatory;
+}
