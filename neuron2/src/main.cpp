@@ -1,39 +1,32 @@
 #include <iostream>
-#include <fstream>
 #include "Neuron.hpp"
 #include "Utility.hpp"
 #include "Network.hpp"
+#include "Experiment.hpp"
+#include <time.h>
 
 using namespace std;
 
-int main()
+int main(int argc, char ** argv) //this paramaters allow to run one graph or all the graph (see the README)
 {	
+	clock_t start, stop; 
+	start = clock(); //initialize the clock
 	
-	//Allow the user to enter data (current, time interval)
-	step simtime(T_START);
-	Network network;
-
-	step prev(T_START);
-	//run simulation
-	while(simtime < T_STOP)
+	Experiment exp; //creation of a experiment
+	if (argc <= 1 ) //if no parameter in main() 
 	{
-		if((simtime-prev)/((double)(T_STOP-T_START)) > 0.1)
-		{
-			std::cerr << "Simulation steps progression : "  << (simtime-T_START)/((double)(T_STOP-T_START))*100 << '\%' << std::endl;
-			prev = simtime;
-		}
-		network.update();
-		simtime ++;
+		exp.runDefaultExperiment(); //run the specific graph 
+	} else if(argc == 2 && ((string)argv[1]).length() == 1 && argv[1][0] == 'a') { //if a parameter is added to the main
+		exp.runAllExperiments(); //run all the graphs
+	}
+	else{
+		cerr << "Argument unknown or too many arguments. Read README.txt for more informations.\nHave a nice day!" << endl;
+		return 1;
 	}
 	
-	ofstream fichier("spikes.txt");
-	ofstream fichier2("spikes.ods");
-	
-	network.printSpikes(fichier2);
-	network.printSpikes(fichier);
-	
-	fichier2.close();
-	fichier.close();
+	stop = clock(); //"stop" the clock
+	double timeSimulation = (double)(stop-start)/CLOCKS_PER_SEC; //Allow to show the progression of the simultation
+	std::cout << "Simulation time: " << timeSimulation << "[s]" << std::endl; //display the progression on the terminal
 	
 	return 0;
 }

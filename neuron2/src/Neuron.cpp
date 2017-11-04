@@ -29,26 +29,21 @@ void Neuron::addSpike(step t)
 	m_times.push_back(t);
 }
 
-//Method to see if the neuron is refractory or not (true/flase)
 bool Neuron::refractory(step t) const
 {
-	 if(m_times.size() == 0.0) //if there wasn't any spike (begining of the simulation) the neuron can't be refractory
-	 {
-		 return false;
-	 }else {
-		 return t - m_times.back() < TAO_REF;
-	 }
+	return m_times.size() != 0 and t - m_times.back() < TAO_REF; /*if there wasn't any spike (begining of the simulation) 
+																* the neuron can't be refractory*/
 }
 
-//update the mebrane potential of the neuron depending on if it is refractory or not
-bool Neuron::update (step t, double input_current, int poisson)
+bool Neuron::update (step t, double input_current, int poisson) 
 {
 	if(t == 0) return false;
 	const step t_stop = m_clock + t;
 	bool spike (false);
 	
 	while(m_clock < t_stop){
-		if (refractory(m_clock)) //neuron refactory 
+		int indice = m_clock%m_j.size();
+		if (refractory(m_clock)) //neuron is refactory 
 		{
 			m_membranePotential=0.0;
 		} else {
@@ -59,17 +54,16 @@ bool Neuron::update (step t, double input_current, int poisson)
 				m_membranePotential =0.0;
 				spike = true;
 			}
-			else{	
-				m_membranePotential=(C1*m_membranePotential+input_current*C2 + (m_j[m_clock%m_j.size()] + poisson)*J);
-				m_j[m_clock%m_j.size()] = 0; //"Clean" the step in which we are now 
+			else{
+				m_membranePotential=(C1*m_membranePotential+input_current*C2 + (m_j[indice] + poisson)*J);
 			}
 		}
+		m_j[indice] = 0; //"Clean" the step in which we are now 
 		m_clock++;
 	}
 	return spike;
 }
 
-//save the time of the spike into a file
 void Neuron::saveSpikes(std::ofstream& fichier)
 {
 	
@@ -85,7 +79,6 @@ void Neuron::saveSpikes(std::ofstream& fichier)
 	}
 }
 
-//save the membrane potential into a file
 void Neuron::savePotential(std::ofstream& fichier)
 {
 	
@@ -97,9 +90,8 @@ void Neuron::savePotential(std::ofstream& fichier)
 	}
 }
 
-void Neuron::addJ(int coeff)  
+void Neuron::addJ(double coeff)  
 {
-	//assert((m_clock + delay )%m_j.size() < m_j.size()); 
 	assert (D < m_j.size());
 	m_j[(m_clock + D)%m_j.size()]+=coeff;
 }
