@@ -41,7 +41,8 @@ bool Neuron::update (step t, double input_current, int poisson)
 	const step t_stop = m_clock + t;
 	bool spike (false);
 	
-	while(m_clock < t_stop){
+	while(m_clock < t_stop)
+	{
 		int indice = m_clock%m_j.size();
 		if (refractory(m_clock)) //neuron is refactory 
 		{

@@ -15,7 +15,7 @@ class Network //!< describe the connexions, interactions between the neurons, re
 		const unsigned int N_NEURONS = 12500; //!< unsigned int: total number of neurons in the network
 		const unsigned int N_EXCITATORY_CONNEXIONS = N_EXCITATORY / 10; //!< unsigned int: number of excitatory connexions (10% of the number of excitatory neurons in the network)
 		const unsigned int N_INHIBITORY_CONNEXIONS = (N_NEURONS - N_EXCITATORY) / 10;//!< unsigned int: number of inhibitory connexions (10% of the number of inhibitory neurons in the network)
-		
+	
 		/**
 		 * Default constructor
 		*/
@@ -63,6 +63,12 @@ class Network //!< describe the connexions, interactions between the neurons, re
 		const double m_jExci; //!< the coefficient for the J_excitatory
 		const double m_jInhib; //!< the coeffcient for the J_inhibitatory 
 		const double m_poisson; //!< Vext/Vthr, param for the poisson distribution
+		std::random_device rd; //creation of a random number
+		std::mt19937 gen;
+		std::poisson_distribution <> p; //creation of a poisson distribution 
+		/*That should not be static as suggested because we may want to have
+		 * more than one network in a simulation.
+		 * /
 };
  
 #endif

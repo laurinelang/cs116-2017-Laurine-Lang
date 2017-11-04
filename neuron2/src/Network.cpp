@@ -4,7 +4,8 @@
 
 Network::Network(double jExci, double jInhib, double poisson): m_neurons(std::vector<Neuron*>(N_NEURONS)), 
 					m_connectedNeurons(N_NEURONS, std::vector<size_t>()), 
-					m_jExci(jExci), m_jInhib(jInhib), m_poisson(poisson)	
+					m_jExci(jExci), m_jInhib(jInhib), m_poisson(poisson),
+					rd(), gen(rd()), p(poisson)	
 {
 	for(size_t n(0); n < N_EXCITATORY; n++) //affect 10000 neurons to the excitatory ones
 	{
@@ -38,9 +39,6 @@ std::vector<std::vector<size_t>> Network::getConnectedNeurons() const
 
 void Network::update()
 {
-	static std::random_device rd; //creation of a random number
-	static std::mt19937 gen(rd());
-	static std::poisson_distribution <> p(m_poisson); //creation of a poisson distribution 
 	assert(m_neurons.size() == N_NEURONS); //test if the size of the table with all neurons = number of neurons we are supposed to have
 	for(size_t i(0); i < m_neurons.size(); i++)
 	{
@@ -83,7 +81,8 @@ void Network::printSpikes(std::ofstream& fichier) const
 	{
 		for(step s : m_neurons[i]->getSpikesTimes())
 		{
-			fichier << s*H << '\t' << i << '\n';
+			if(s >= T_START_RECORD && s <= T_STOP_RECORD)
+				fichier << s*H << '\t' << i << '\n';
 		}
 	}
 }

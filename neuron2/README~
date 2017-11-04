@@ -1,0 +1,16 @@
+Run unittest (google test):
+- go in cs116-2017-Laurine-Lang/neuron2/build 
+- "make"
+- "./neuron.unittest
+
+Use doxygen:
+- go to cs116-2017-Laurine-Lang/neuron2/src
+- "doxygen" 
+- "doxygen Doxyfile"
+- "firefox html/index.html"
+
+Run the simulation: 
+- go the cs116-2017-Laurine-Lang/neuron2/build
+- "make"
+- for the default graph (J_inhibitor = -0,5; Vext/Vthr = 2): ./../bin/Neuron
+- for all the graphs (A(J_inhib=-0.3; Vest/Vthr=2)/ B(J_inhib=-0.6; Vest/Vthr=4)/ C(J_inhib=-0.5; Vext/Vthr=2)/ D(J_inhib=-0.45; Vest/Vthr=0.9)): ./../bin/Neuron a
