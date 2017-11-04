@@ -1,0 +1,30 @@
+Determining if files pthread.h exist passed with the following output:
+Change Dir: /home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/bin/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec4253920789/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec4253920789.dir/build.make CMakeFiles/cmTryCompileExec4253920789.dir/build
+make[1]: Entering directory `/home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/bin/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/bin/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec4253920789.dir/CheckIncludeFiles.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec4253920789.dir/CheckIncludeFiles.c.o   -c /home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/bin/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+Linking C executable cmTryCompileExec4253920789
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4253920789.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec4253920789.dir/CheckIncludeFiles.c.o  -o cmTryCompileExec4253920789 -rdynamic 
+make[1]: Leaving directory `/home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/bin/CMakeFiles/CMakeTmp'
+
+
+Determining if files pthread.h exist passed with the following output:
+Change Dir: /home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/bin/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec14659733/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec14659733.dir/build.make CMakeFiles/cmTryCompileExec14659733.dir/build
+make[1]: Entering directory `/home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/bin/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/bin/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec14659733.dir/CheckIncludeFiles.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec14659733.dir/CheckIncludeFiles.c.o   -c /home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/bin/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+Linking C executable cmTryCompileExec14659733
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec14659733.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec14659733.dir/CheckIncludeFiles.c.o  -o cmTryCompileExec14659733 -rdynamic 
+make[1]: Leaving directory `/home/localguest/Desktop/projetSV/cs116-2017-Laurine-Lang/neuron2/src/bin/CMakeFiles/CMakeTmp'
+
+
