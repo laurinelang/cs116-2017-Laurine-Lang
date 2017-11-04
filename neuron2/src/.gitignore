@@ -2,5 +2,5 @@
 !.gitignore
 !*.h*
 !*.c*
-!gtest*
+!gtest/*
 !CMakeLists.txt

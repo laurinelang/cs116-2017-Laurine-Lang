@@ -68,7 +68,7 @@ class Network //!< describe the connexions, interactions between the neurons, re
 		std::poisson_distribution <> p; //creation of a poisson distribution 
 		/*That should not be static as suggested because we may want to have
 		 * more than one network in a simulation.
-		 * /
+		 */
 };
  
 #endif
